@@ -1,15 +1,13 @@
-from simclr import SimCLR
+print("partito")
 import yaml
+
 from data_aug.dataset_wrapper import DataSetWrapper
+from simclr import SimCLR
 
-
-def main():
-    config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
-    dataset = DataSetWrapper(config['batch_size'], **config['dataset'])
-
-    simclr = SimCLR(dataset, config)
-    simclr.train()
-
-
-if __name__ == "__main__":
-    main()
+print("ciao dal main")
+config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
+print("ok yaml")
+dataset = DataSetWrapper(config["batch_size"], **config["dataset"])
+print("ok dataset")
+simclr = SimCLR(dataset, config)
+simclr.train()
