@@ -9,6 +9,7 @@ def main():
     dataset = DataSetWrapper(config["batch_size"], **config["dataset"])
     simclr = SimCLR(dataset, config)
     simclr.train()
+    simclr.extract_features()
 
 
 if __name__ == "__main__":
