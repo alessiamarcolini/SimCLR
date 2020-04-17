@@ -18,7 +18,7 @@ try:
 
     apex_support = True
 except:
-    print(
+    sys.stdout.write(
         "Please install apex for mixed precision training from: https://github.com/NVIDIA/apex"
     )
     apex_support = False

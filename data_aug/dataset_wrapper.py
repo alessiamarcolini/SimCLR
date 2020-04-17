@@ -15,7 +15,8 @@ np.random.seed(0)
 
 
 class DataSetWrapper(object):
-    def __init__(self, batch_size, num_workers, valid_size, input_shape, s):
+    def __init__(self, dataset_dir, batch_size, num_workers, valid_size, input_shape, s):
+        self.dataset_dir = dataset_dir
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.valid_size = valid_size
@@ -43,11 +44,11 @@ class DataSetWrapper(object):
         else:
             if augment:
                 train_dataset = CovidDatasetPatient(
-                    '/thunderdisk/covid/dataset_triplets_5_norm', transform=data_augment
+                    self.dataset_dir, transform=data_augment
                 )
             else:
                 train_dataset = CovidDatasetPatient(
-                    '/thunderdisk/covid/dataset_triplets_5_norm'
+                    self.dataset_dir
                 )
 
         train_loader, valid_loader = self.get_train_validation_data_loaders(
@@ -75,11 +76,16 @@ class DataSetWrapper(object):
     def _get_simclr_pipeline_transform_covid(self):
         # get a set of data augmentation transformations as described in the SimCLR paper.
         color_jitter = transforms.ColorJitter(
-            0.2 * self.s, 0.8 * self.s, 0.8 * self.s, 0.2 * self.s
+            brightness=0.3 * self.s, contrast=0.4 * self.s
         )
         data_transforms = transforms.Compose(
             [
-                transforms.RandomResizedCrop(size=self.input_shape[0]),
+                transforms.RandomAffine(
+                    degrees=(-10, 10),
+                    translate=((0.1, 0.1),
+                    scale=(0.80, 1.20), 
+                    shearing=(-10, 10)
+                ),
                 transforms.RandomHorizontalFlip(),
                 transforms.RandomApply([color_jitter], p=0.8),
                 GaussianBlur(kernel_size=int(0.1 * self.input_shape[0])),
