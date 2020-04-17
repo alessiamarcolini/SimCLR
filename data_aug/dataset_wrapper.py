@@ -82,9 +82,9 @@ class DataSetWrapper(object):
             [
                 transforms.RandomAffine(
                     degrees=(-10, 10),
-                    translate=((0.1, 0.1),
+                    translate=(0.1, 0.1),
                     scale=(0.80, 1.20), 
-                    shearing=(-10, 10)
+                    shear=(-10, 10)
                 ),
                 transforms.RandomHorizontalFlip(),
                 transforms.RandomApply([color_jitter], p=0.8),
