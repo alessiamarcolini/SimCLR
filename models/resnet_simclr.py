@@ -33,7 +33,7 @@ class ResNetSimCLR(nn.Module):
     def forward(self, x):
         h = self.features(x)
         h = h.squeeze()
-
+        # MLP: from representations to projections
         x = self.l1(h)
         x = F.relu(x)
         x = self.l2(x)

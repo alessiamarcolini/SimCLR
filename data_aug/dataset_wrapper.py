@@ -76,7 +76,7 @@ class DataSetWrapper(object):
     def _get_simclr_pipeline_transform_covid(self):
         # get a set of data augmentation transformations as described in the SimCLR paper.
         color_jitter = transforms.ColorJitter(
-            brightness=0.3 * self.s, contrast=0.4 * self.s
+            brightness=0.3 * self.s, contrast=0.3 * self.s
         )
         data_transforms = transforms.Compose(
             [
@@ -88,7 +88,7 @@ class DataSetWrapper(object):
                 ),
                 transforms.RandomHorizontalFlip(),
                 transforms.RandomApply([color_jitter], p=0.8),
-                GaussianBlur(kernel_size=int(0.1 * self.input_shape[0])),
+                # GaussianBlur(kernel_size=int(0.1 * self.input_shape[0])),
                 transforms.ToTensor(),
             ]
         )
